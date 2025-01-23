@@ -1,0 +1,100 @@
+import java.util.Scanner;
+
+public class ArrayStatistics {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Ввод массива
+        System.out.println("Введите количество элементов в массиве:");
+        int n = scanner.nextInt();
+
+        int[] array = new int[n];
+        System.out.println("Введите элементы массива:");
+        for (int i = 0; i < n; i++) {
+            array[i] = scanner.nextInt();
+        }
+
+        // Вычисление статистик
+        int sum = 0, min = Integer.MAX_VALUE, max = Integer.MIN_VALUE;
+        for (int num : array) {
+            sum += num;
+            if (num < min) min = num;
+            if (num > max) max = num;
+        }
+
+        double average = (double) sum / n;
+
+        // Нахождение второго минимального и второго максимального
+        int secondMin = Integer.MAX_VALUE, secondMax = Integer.MIN_VALUE;
+        for (int num : array) {
+            if (num > min && num < secondMin) {
+                secondMin = num;
+            }
+            if (num < max && num > secondMax) {
+                secondMax = num;
+            }
+        }
+
+        // Вывод результатов
+        System.out.println("Сумма элементов: " + sum);
+        System.out.println("Среднее значение: " + average);
+        System.out.println("Минимальный элемент: " + min);
+        System.out.println("Максимальный элемент: " + max);
+
+        if (secondMin == Integer.MAX_VALUE) {
+            System.out.println("Второго минимального элемента не существует.");
+        } else {
+            System.out.println("Второй минимальный элемент: " + secondMin);
+        }
+
+        if (secondMax == Integer.MIN_VALUE) {
+            System.out.println("Второго максимального элемента не существует.");
+        } else {
+            System.out.println("Второй максимальный элемент: " + secondMax);
+        }
+
+        scanner.close();
+    }
+}
+
+
+
+
+
+class PalindromeChecker {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Ввод строки от пользователя
+        System.out.println("Введите слово, число или предложение для проверки:");
+        String input = scanner.nextLine();
+
+        // Проверка палиндрома
+        if (isPalindrome(input)) {
+            System.out.println("Это палиндром!");
+        } else {
+            System.out.println("Это не палиндром.");
+        }
+
+        scanner.close();
+    }
+
+    // Метод для проверки палиндрома
+    public static boolean isPalindrome(String str) {
+        // Приведение строки к нижнему регистру и удаление ненужных символов
+        String cleaned = str.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+
+        // Проверка на палиндром с использованием двух указателей
+        int left = 0;
+        int right = cleaned.length() - 1;
+
+        while (left < right) {
+            if (cleaned.charAt(left) != cleaned.charAt(right)) {
+                return false; // Если символы не совпадают, это не палиндром
+            }
+            left++;
+            right--;
+        }
+        return true; // Все символы совпали
+    }
+}
