@@ -1,0 +1,116 @@
+import java.util.*;
+
+public class Student {
+    private int Id;
+    private String Name;
+    private int Age;
+    private Set<String> courses;
+
+    public Student(int id, String name, int age, Set<String> courses) {
+        Id = id;
+        Name = name;
+        Age = age;
+        this.courses = courses;
+    }
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
+    }
+
+    public String getName() {
+        return Name;
+    }
+
+    public void setName(String name) {
+        Name = name;
+    }
+
+    public int getAge() {
+        return Age;
+    }
+
+    public void setAge(int age) {
+        Age = age;
+    }
+
+    public Set<String> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(Set<String> courses) {
+        this.courses = courses;
+    }
+}
+
+
+class ManagementSystem{
+    private Map<Integer, Student> students = new HashMap<>();
+
+    void AddStudent(Student student) {
+        students.put(student.getId(), student);
+    }
+
+    void DelStudent(int id) {
+        students.remove(id);
+    }
+
+    void UpdateSt(int id, String name, int age, Set<String> courses) {
+        Student student = students.get(id);
+        if (student != null) {
+            student.setName(name);
+            student.setAge(age);
+            student.setCourses(courses);
+        }
+    }
+
+    void AllStudents() {
+        List<Student> list = new ArrayList<>(students.values());
+        list.sort(Comparator.comparingInt(Student::getId));
+        for (Student s : list) {
+            System.out.println(s);
+        }
+    }
+
+    void StById(int id) {
+        try {
+            System.out.println(students.get(id));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    void StCourse(String course) {
+        for (Student s : students.values()) {
+            if (s.getCourses().contains(course)) {
+                System.out.println(s);
+            }
+        }
+    }
+}
+
+class Test{
+    public static void main(String[] args) {
+        ManagementSystem manager = new ManagementSystem();
+
+        manager.AddStudent(new Student(1, "Elya", 19, Set.of("Java", "Python")));
+        manager.AddStudent(new Student(2, "Bema", 18, Set.of("Java", "C++")));
+        manager.AddStudent(new Student(3, "Nazima", 17, Set.of("Python", "Javascript")));
+
+        manager.AllStudents();
+
+        manager.StCourse("Java");
+
+        manager.StById(2);
+
+        manager.UpdateSt(1, "Anya", 21, Set.of("Java", "Go"));
+        manager.StById(1);
+
+        manager.DelStudent(3);
+        manager.AllStudents();
+
+    }
+}
