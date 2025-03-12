@@ -1,0 +1,110 @@
+import java.util.*;
+
+public class Task implements Comparable<Task> {
+    String taskName;
+    int priority;
+    int duration;
+
+    public Task(String taskName, int priority, int duration) {
+        this.taskName = taskName;
+        this.priority = priority;
+        this.duration = duration;
+    }
+
+    @Override
+    public int compareTo(Task other) {
+        if (this.priority != other.priority) {
+            return Integer.compare(other.priority, this.priority);
+        } else {
+            return Integer.compare(this.duration, other.duration);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return String.format("[Priority %d] %s (Duration: %d mins)", priority, taskName, duration);
+    }
+}
+
+class TaskScheduler {
+    private PriorityQueue<Task> scheduledTasks = new PriorityQueue<>(); 
+    private Queue<Task> pendingTasks = new LinkedList<>(); 
+
+    public void addTask(String taskName, int priority, int duration) {
+        Task newTask = new Task(taskName, priority, duration);
+        scheduledTasks.add(newTask);
+        System.out.println("Task added: " + newTask);
+    }
+
+    public void processTask() {
+        if (!scheduledTasks.isEmpty()) {
+            Task task = scheduledTasks.poll();
+            System.out.println("Processing Task: " + task);
+        } else if (!pendingTasks.isEmpty()) {
+            Task task = pendingTasks.poll();
+            System.out.println("Processing Pending Task: " + task);
+        } else {
+            System.out.println("No tasks to process.");
+        }
+    }
+
+    public void delayTask(String taskName) {
+        Task delayedTask = null;
+        for (Task task : scheduledTasks) {
+            if (task.taskName.equals(taskName)) {
+                delayedTask = task;
+                break;
+            }
+        }
+        if (delayedTask != null) {
+            scheduledTasks.remove(delayedTask);
+            pendingTasks.offer(delayedTask);
+            System.out.println("Delaying Task: " + taskName);
+        }
+    }
+
+    public void showTasks() {
+        System.out.println("\nScheduled Tasks (sorted by priority):");
+        if (scheduledTasks.isEmpty()) {
+            System.out.println("(No priority tasks)");
+        } else {
+            scheduledTasks.forEach(System.out::println);
+        }
+
+        System.out.println("\nPending Tasks (FIFO Order):");
+        if (pendingTasks.isEmpty()) {
+            System.out.println("(No pending tasks)");
+        } else {
+            pendingTasks.forEach(System.out::println);
+        }
+    }
+}
+
+class TESTing {
+    public static void main(String[] args) {
+        TaskScheduler scheduler = new TaskScheduler();
+
+        scheduler.addTask("Task1", 3, 20);
+        scheduler.addTask("Task2", 5, 45);
+        scheduler.addTask("Task3", 2, 30);
+        scheduler.addTask("Task4", 5, 50);
+        scheduler.addTask("Task5", 4, 25);
+
+        scheduler.showTasks();
+
+        scheduler.processTask(); 
+        scheduler.delayTask("Task1");
+        scheduler.showTasks();
+
+        scheduler.delayTask("Task3");
+        scheduler.showTasks();
+
+        scheduler.processTask(); 
+        scheduler.showTasks();
+
+        scheduler.processTask();
+        scheduler.showTasks();
+
+
+    }
+}
