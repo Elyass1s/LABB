@@ -1,0 +1,46 @@
+public class Task {
+    /*
+//это первое задание
+    public static <T> List<T> Adding(List<T> list1, List<T> list2) {
+        List<T> result = new ArrayList<>();
+        int maxSize = Math.max(list1.size(), list2.size());
+
+        for (int i = 0; i < maxSize; i++) {
+            if (i < list1.size()) {
+                result.add(list1.get(i));
+            }
+            if (i < list2.size()) {
+                result.add(list2.get(i));
+            }
+        }
+
+        return result;
+    }
+    public static void main(String[] args) {
+        List<String> list1 = Arrays.asList("1", "2", "3");
+        List<String> list2 = Arrays.asList("А", "Б", "В");
+
+        List<String> ourlist = Adding(list1, list2);
+        System.out.println("Результат: " + ourlist);
+    }
+    //---------------------------------------------------
+    //второе задание
+
+    public static <K, V> void NameMark(Map<K, V> map) {
+        for (Map.Entry<K, V> entry : map.entrySet()) {
+            System.out.println(entry.getKey() + " -> " + entry.getValue());
+        }
+    }
+
+
+    public static void main(String[] args) {
+        Map<String, Integer> scores = new HashMap<>();
+        scores.put("Emill", 90);
+        scores.put("Ktoto", 100);
+        NameMark(scores);
+    }
+*/
+    //------------------------------------------------------
+ 
+
+}
